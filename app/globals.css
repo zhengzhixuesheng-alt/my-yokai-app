@@ -1,0 +1,61 @@
+@import "tailwindcss";
+
+@theme {
+  /* カスタムカラー: 妖怪テーマ */
+  --color-midnight: #050a14;
+  --color-yokai-purple: #a855f7;
+  --color-yokai-cyan: #22d3ee;
+
+  /* 背景グラデーション設定 (旧 config.js からの移植 + 強化) */
+  --background-image-yokai-gradient: radial-gradient(circle at center, var(--color-midnight) 0%, #000000 100%);
+
+  /* ================= アニメーション定義 ================= */
+
+  /* 1. キャラクター浮遊 (ふわふわ) */
+  --animate-float: float 6s ease-in-out infinite;
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+  }
+
+  /* 2. 人魂パーティクル (ゆらゆら上昇) */
+  --animate-wisp: wisp 10s linear infinite;
+  @keyframes wisp {
+    0% { transform: translateY(100vh) scale(0.5); opacity: 0; }
+    20% { opacity: 0.8; }
+    80% { opacity: 0.8; }
+    100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+  }
+
+  /* 3. 開始画面の退場 (拡大しながらフェードアウト) */
+  --animate-exit-screen: exit-screen 0.8s cubic-bezier(0.7, 0, 0.3, 1) forwards;
+  @keyframes exit-screen {
+    0% { opacity: 1; transform: scale(1); filter: blur(0); }
+    100% { opacity: 0; transform: scale(1.1); filter: blur(10px); visibility: hidden; }
+  }
+
+  /* 4. 診断画面の入場 (下からスッと出る) */
+  --animate-enter-screen: enter-screen 1s cubic-bezier(0.16, 1, 0.3, 1) 0.2s backwards;
+  @keyframes enter-screen {
+    0% { opacity: 0; transform: translateY(20px) scale(0.95); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+  }
+}
+
+/* 
+  画面重ね合わせ用のユーティリティ 
+  これを使うと絶対配置を使わずに要素を完全に重ねられます
+*/
+.stack-grid {
+  display: grid;
+  grid-template-areas: "stack";
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.stack-grid > * {
+  grid-area: stack;
+  width: 100%;
+  height: 100%;
+}
